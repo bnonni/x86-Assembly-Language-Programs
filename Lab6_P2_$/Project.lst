@@ -1,0 +1,71 @@
+Microsoft (R) Macro Assembler Version 14.16.27027.1	    02/20/19 09:30:04
+DollarSign.asm						     Page 1 - 1
+
+
+				; Using the $ operator
+				; Lab 6 Part 2 - $
+
+				.386
+				.model flat,stdcall
+				.stack 4096
+				ExitProcess proto,dwExitCode:dword
+
+ 00000000			.data
+ 00000000 20 79 6F 75 20	myString byte " you like it"
+	   6C 69 6B 65 20
+	   69 74
+ 0000000C = 0000000C		myString_length = ($ - myString)
+
+ 00000000			.code
+ 00000000			main proc
+					
+ 00000000  B8 00000000			mov eax,0
+ 00000005  B0 0C			mov al, myString_length
+
+					invoke ExitProcess,0
+ 00000007  6A 00	   *	    push   +000000000h
+ 00000009  E8 00000000 E   *	    call   ExitProcess
+ 0000000E			main endp
+				end main
+Microsoft (R) Macro Assembler Version 14.16.27027.1	    02/20/19 09:30:04
+DollarSign.asm						     Symbols 2 - 1
+
+
+
+
+Segments and Groups:
+
+                N a m e                 Size     Length   Align   Combine Class
+
+FLAT . . . . . . . . . . . . . .	GROUP
+STACK  . . . . . . . . . . . . .	32 Bit	 00001000 DWord	  Stack	  'STACK'	 
+_DATA  . . . . . . . . . . . . .	32 Bit	 0000000C DWord	  Public  'DATA'	
+_TEXT  . . . . . . . . . . . . .	32 Bit	 0000000E DWord	  Public  'CODE'	
+
+
+Procedures, parameters, and locals:
+
+                N a m e                 Type     Value    Attr
+
+ExitProcess  . . . . . . . . . .	P Near	 00000000 FLAT	Length= 00000000 External STDCALL
+main . . . . . . . . . . . . . .	P Near	 00000000 _TEXT	Length= 0000000E Public STDCALL
+
+
+Symbols:
+
+                N a m e                 Type     Value    Attr
+
+@CodeSize  . . . . . . . . . . .	Number	 00000000h   
+@DataSize  . . . . . . . . . . .	Number	 00000000h   
+@Interface . . . . . . . . . . .	Number	 00000003h   
+@Model . . . . . . . . . . . . .	Number	 00000007h   
+@code  . . . . . . . . . . . . .	Text   	 _TEXT
+@data  . . . . . . . . . . . . .	Text   	 FLAT
+@fardata?  . . . . . . . . . . .	Text   	 FLAT
+@fardata . . . . . . . . . . . .	Text   	 FLAT
+@stack . . . . . . . . . . . . .	Text   	 FLAT
+myString_length  . . . . . . . .	Number	 0000000Ch   
+myString . . . . . . . . . . . .	Byte	 00000000 _DATA	
+
+	   0 Warnings
+	   0 Errors
