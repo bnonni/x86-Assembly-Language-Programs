@@ -1,4 +1,4 @@
-Microsoft (R) Macro Assembler Version 14.16.27027.1	    02/20/19 09:30:04
+Microsoft (R) Macro Assembler Version 14.16.27027.1	    02/20/19 20:40:53
 DollarSign.asm						     Page 1 - 1
 
 
@@ -11,23 +11,27 @@ DollarSign.asm						     Page 1 - 1
 				ExitProcess proto,dwExitCode:dword
 
  00000000			.data
- 00000000 20 79 6F 75 20	myString byte " you like it"
-	   6C 69 6B 65 20
-	   69 74
- 0000000C = 0000000C		myString_length = ($ - myString)
+ 00000000 00000087		myString DWORD 87h
+ 00000004 = 00000004		myString_length = ($ - myString)
 
  00000000			.code
  00000000			main proc
-					
- 00000000  B8 00000000			mov eax,0
- 00000005  B0 0C			mov al, myString_length
+
+ 00000000  B0 04			mov al, myString_length
+ 00000002  B8 00000000			mov eax,0
+ 00000007  BB 00000002			mov ebx,2
+ 0000000C  83 C3 09			add ebx,9
+ 0000000F  B0 04			mov al, myString_length
+ 00000011  B9 0000000B			mov ecx,11
+ 00000016  83 C1 05			add ecx,5
+ 00000019  8B CB			mov ecx,ebx
 
 					invoke ExitProcess,0
- 00000007  6A 00	   *	    push   +000000000h
- 00000009  E8 00000000 E   *	    call   ExitProcess
- 0000000E			main endp
+ 0000001B  6A 00	   *	    push   +000000000h
+ 0000001D  E8 00000000 E   *	    call   ExitProcess
+ 00000022			main endp
 				end main
-Microsoft (R) Macro Assembler Version 14.16.27027.1	    02/20/19 09:30:04
+Microsoft (R) Macro Assembler Version 14.16.27027.1	    02/20/19 20:40:53
 DollarSign.asm						     Symbols 2 - 1
 
 
@@ -39,8 +43,8 @@ Segments and Groups:
 
 FLAT . . . . . . . . . . . . . .	GROUP
 STACK  . . . . . . . . . . . . .	32 Bit	 00001000 DWord	  Stack	  'STACK'	 
-_DATA  . . . . . . . . . . . . .	32 Bit	 0000000C DWord	  Public  'DATA'	
-_TEXT  . . . . . . . . . . . . .	32 Bit	 0000000E DWord	  Public  'CODE'	
+_DATA  . . . . . . . . . . . . .	32 Bit	 00000004 DWord	  Public  'DATA'	
+_TEXT  . . . . . . . . . . . . .	32 Bit	 00000022 DWord	  Public  'CODE'	
 
 
 Procedures, parameters, and locals:
@@ -48,7 +52,7 @@ Procedures, parameters, and locals:
                 N a m e                 Type     Value    Attr
 
 ExitProcess  . . . . . . . . . .	P Near	 00000000 FLAT	Length= 00000000 External STDCALL
-main . . . . . . . . . . . . . .	P Near	 00000000 _TEXT	Length= 0000000E Public STDCALL
+main . . . . . . . . . . . . . .	P Near	 00000000 _TEXT	Length= 00000022 Public STDCALL
 
 
 Symbols:
@@ -64,8 +68,8 @@ Symbols:
 @fardata?  . . . . . . . . . . .	Text   	 FLAT
 @fardata . . . . . . . . . . . .	Text   	 FLAT
 @stack . . . . . . . . . . . . .	Text   	 FLAT
-myString_length  . . . . . . . .	Number	 0000000Ch   
-myString . . . . . . . . . . . .	Byte	 00000000 _DATA	
+myString_length  . . . . . . . .	Number	 00000004h   
+myString . . . . . . . . . . . .	DWord	 00000000 _DATA	
 
 	   0 Warnings
 	   0 Errors
