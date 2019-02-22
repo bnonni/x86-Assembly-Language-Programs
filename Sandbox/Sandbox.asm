@@ -12,14 +12,17 @@
 .model flat,stdcall
 .stack 4096
 ExitProcess proto,dwExitCode:dword
+
 .data
-testVar SDWORD -1
+val1 BYTE 4
 
 .code
 main proc
-	mov	eax,testVar		
-	add	eax,6		
-
+	mov eax,0
+	mov ebx,0
+	mov bl,6
+	add bl,val1
+	mov al,bl
 	invoke ExitProcess,0
 main endp
 end main
