@@ -1,4 +1,4 @@
-Microsoft (R) Macro Assembler Version 14.16.27027.1	    02/22/19 09:50:35
+Microsoft (R) Macro Assembler Version 14.16.27027.1	    02/22/19 12:04:48
 Nonni1.asm						     Page 1 - 1
 
 
@@ -6,26 +6,29 @@ Nonni1.asm						     Page 1 - 1
 				; Class: CSC3210
 				; Assignment#: 3-1
 				; Description: This program executes the following mathmatecial equation AX = val2 + 5 + val3 - val1
-				; Result: AX = 
+				; Result: AX = 28h = 40d
+
 				.386
 				.model flat,stdcall
 				.stack 4096
 				ExitProcess proto,dwExitCode:dword
+
  00000000			.data
  00000000 0005			val1 SWORD 5 
  00000002 0019			val2 WORD 25
  00000004 000F			val3 WORD 15
+
  00000000			.code
  00000000			main proc
  00000000  B8 00000000			mov eax,0	;zero out eax register
  00000005  BB 00000000			mov ebx,0	;zero out ebx register
 
- 0000000A  66| 8B 1D			mov bx,val2	;move val2 to bx register
+ 0000000A  66| 8B 1D			mov bx,val2	;move val2 to bx register bx = 25d = 
 	   00000002 R
- 00000011  66| 83 C3 05			add bx,5	;add 5 to bx register
- 00000015  66| 03 1D			add bx,val3	;add val3 to bx register
+ 00000011  66| 83 C3 05			add bx,5	;add 5 to bx register bx = 30
+ 00000015  66| 03 1D			add bx,val3	;add val3 to bx register bx = 45 = 2Dh
 	   00000004 R
- 0000001C  66| 2B 1D			sub bx,val1	;subtract val1 from bx register
+ 0000001C  66| 2B 1D			sub bx,val1	;subtract val1 from bx register, bx = 40d = 
 	   00000000 R
  00000023  66| 8B C3			mov ax,bx	;mov bx to ax
 					
@@ -35,7 +38,7 @@ Nonni1.asm						     Page 1 - 1
 
  0000002D			main endp
 				end main
-Microsoft (R) Macro Assembler Version 14.16.27027.1	    02/22/19 09:50:35
+Microsoft (R) Macro Assembler Version 14.16.27027.1	    02/22/19 12:04:48
 Nonni1.asm						     Symbols 2 - 1
 
 

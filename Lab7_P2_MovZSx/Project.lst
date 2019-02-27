@@ -1,0 +1,72 @@
+Microsoft (R) Macro Assembler Version 14.16.27027.1	    02/27/19 09:20:08
+MovZSx.asm						     Page 1 - 1
+
+
+				; Bryan Nonni
+				; Using the movzx & movsx operands
+				; Lab 7 Part 1 - MOVZX & MOVSZ
+
+				.386
+				.model flat,stdcall
+				.stack 4096
+				ExitProcess proto,dwExitCode:dword
+
+ 00000000			.data
+ 00000000 9B				myByte1 BYTE 9Bh ; 1 byte
+
+ 00000000			.code
+ 00000000			main proc
+
+ 00000000  66| BB A69B			mov bx, 0A69Bh
+ 00000004  0F B7 C3			movzx eax, bx	;EAX = 0000A69Bh, movzx is an unsigned move, so it pads the dest reg with 0's to accommodate the 2byte in 4byte reg 
+ 00000007  0F B6 05			movzx eax, myByte1	;EAX = 0000009Bh, movzx is an unsigned move, so it pads the dest reg with 0's to accommodate the 1byte in 4byte reg
+	   00000000 R
+ 0000000E  66| BB A69B			mov bx,0A69Bh
+ 00000012  0F BF C3			movsx eax, bx	;EAX = FFFFA69B, movsx is a signed move, so it pads the register with 1's (binary) F's (hex) to accommodate the 2bytes to 4byte reg
+
+					invoke ExitProcess,0
+ 00000015  6A 00	   *	    push   +000000000h
+ 00000017  E8 00000000 E   *	    call   ExitProcess
+ 0000001C			main endp
+				end main
+Microsoft (R) Macro Assembler Version 14.16.27027.1	    02/27/19 09:20:08
+MovZSx.asm						     Symbols 2 - 1
+
+
+
+
+Segments and Groups:
+
+                N a m e                 Size     Length   Align   Combine Class
+
+FLAT . . . . . . . . . . . . . .	GROUP
+STACK  . . . . . . . . . . . . .	32 Bit	 00001000 DWord	  Stack	  'STACK'	 
+_DATA  . . . . . . . . . . . . .	32 Bit	 00000001 DWord	  Public  'DATA'	
+_TEXT  . . . . . . . . . . . . .	32 Bit	 0000001C DWord	  Public  'CODE'	
+
+
+Procedures, parameters, and locals:
+
+                N a m e                 Type     Value    Attr
+
+ExitProcess  . . . . . . . . . .	P Near	 00000000 FLAT	Length= 00000000 External STDCALL
+main . . . . . . . . . . . . . .	P Near	 00000000 _TEXT	Length= 0000001C Public STDCALL
+
+
+Symbols:
+
+                N a m e                 Type     Value    Attr
+
+@CodeSize  . . . . . . . . . . .	Number	 00000000h   
+@DataSize  . . . . . . . . . . .	Number	 00000000h   
+@Interface . . . . . . . . . . .	Number	 00000003h   
+@Model . . . . . . . . . . . . .	Number	 00000007h   
+@code  . . . . . . . . . . . . .	Text   	 _TEXT
+@data  . . . . . . . . . . . . .	Text   	 FLAT
+@fardata?  . . . . . . . . . . .	Text   	 FLAT
+@fardata . . . . . . . . . . . .	Text   	 FLAT
+@stack . . . . . . . . . . . . .	Text   	 FLAT
+myByte1  . . . . . . . . . . . .	Byte	 00000000 _DATA	
+
+	   0 Warnings
+	   0 Errors

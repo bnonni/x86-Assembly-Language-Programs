@@ -1,0 +1,82 @@
+Microsoft (R) Macro Assembler Version 14.16.27027.1	    02/27/19 09:46:21
+Mov.asm							     Page 1 - 1
+
+
+				; Bryan Nonni
+				; Using the mov operator
+				; Lab 7 Part 1 - Mov
+
+				.386
+				.model flat,stdcall
+				.stack 4096
+				ExitProcess proto,dwExitCode:dword
+
+ 00000000			.data
+ 00000000 64				count BYTE 100 ; 1 byte
+ 00000001 0002				wVal  WORD 2 ; 2 bytes
+ 00000003 0004				wVal2 WORD 4 ; 2 bytes
+
+ 00000000			.code
+ 00000000			main proc
+ 00000000  8A 1D 00000000 R		mov bl, count ; 1 byte reg & 1 byte value
+ 00000006  66| A1			mov ax, wVal ; 2 byte reg & 2 byte value
+	   00000001 R
+ 0000000C  A2 00000000 R		mov count, al ; 1 byte mem value & 1 byte reg
+
+ 00000011  66| A1			mov ax, wVal ; error - trying to move a 2 byte value to a 1 byte register
+	   00000001 R
+ 00000017  A0 00000000 R		mov al, count ; error - trying to move 1 byte value to 2 byte register
+ 0000001C  8A 25 00000000 R		mov ah, count ; error - trying to move 1 byte value to 4 byte register
+ 00000022  66| 8B 1D			mov bx, wVal ; error - trying to move memory to memory, moving wVal to bx
+	   00000001 R
+ 00000029  66| 89 1D			mov wVal2, bx
+	   00000003 R
+
+					invoke ExitProcess,0
+ 00000030  6A 00	   *	    push   +000000000h
+ 00000032  E8 00000000 E   *	    call   ExitProcess
+ 00000037			main endp
+				end main
+Microsoft (R) Macro Assembler Version 14.16.27027.1	    02/27/19 09:46:21
+Mov.asm							     Symbols 2 - 1
+
+
+
+
+Segments and Groups:
+
+                N a m e                 Size     Length   Align   Combine Class
+
+FLAT . . . . . . . . . . . . . .	GROUP
+STACK  . . . . . . . . . . . . .	32 Bit	 00001000 DWord	  Stack	  'STACK'	 
+_DATA  . . . . . . . . . . . . .	32 Bit	 00000005 DWord	  Public  'DATA'	
+_TEXT  . . . . . . . . . . . . .	32 Bit	 00000037 DWord	  Public  'CODE'	
+
+
+Procedures, parameters, and locals:
+
+                N a m e                 Type     Value    Attr
+
+ExitProcess  . . . . . . . . . .	P Near	 00000000 FLAT	Length= 00000000 External STDCALL
+main . . . . . . . . . . . . . .	P Near	 00000000 _TEXT	Length= 00000037 Public STDCALL
+
+
+Symbols:
+
+                N a m e                 Type     Value    Attr
+
+@CodeSize  . . . . . . . . . . .	Number	 00000000h   
+@DataSize  . . . . . . . . . . .	Number	 00000000h   
+@Interface . . . . . . . . . . .	Number	 00000003h   
+@Model . . . . . . . . . . . . .	Number	 00000007h   
+@code  . . . . . . . . . . . . .	Text   	 _TEXT
+@data  . . . . . . . . . . . . .	Text   	 FLAT
+@fardata?  . . . . . . . . . . .	Text   	 FLAT
+@fardata . . . . . . . . . . . .	Text   	 FLAT
+@stack . . . . . . . . . . . . .	Text   	 FLAT
+count  . . . . . . . . . . . . .	Byte	 00000000 _DATA	
+wVal2  . . . . . . . . . . . . .	Word	 00000003 _DATA	
+wVal . . . . . . . . . . . . . .	Word	 00000001 _DATA	
+
+	   0 Warnings
+	   0 Errors
