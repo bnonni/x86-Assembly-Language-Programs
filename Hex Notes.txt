@@ -1,0 +1,4 @@
+2's Complement HEX: 
+-Subtract 15 and add 1 or subtract 16 IF bit is not 0.
+-If bit is 0, must subtract 15 to get F
+-2 byte hex = think of first digit as itself (16^0 = 1 * LSB)
