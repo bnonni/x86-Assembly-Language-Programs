@@ -1,0 +1,108 @@
+Microsoft (R) Macro Assembler Version 14.16.27026.1	    03/08/19 18:30:15
+Nonni2.asm						     Page 1 - 1
+
+
+				; Student: Bryan Nonni
+				; Class: CSC3210
+				; Assignment#: 4-1
+				; Description: Write an assembly program to compute the following expressions
+				; z = x + 2 – r
+				; z = y + r + 9
+				; z = y – x + 3
+				; where x, y, r and z are 16-bit integer memory variables.
+				; x = 10, y = 20, r = 6
+				; z is a list. (you must use DUP when identifying and initializing z list)
+				; Values of the z list after running the program should be: 0006h, 0023h, 000Dh.; Use the debugger to verify your answer.  
+
+
+				.386
+				.model flat,stdcall
+				.stack 4096
+				ExitProcess proto,dwExitCode:dword
+ 00000000			.data 
+ 00000000 000A				x WORD 10
+ 00000002 0014				y WORD 20
+ 00000004 0006				r WORD 6
+ 00000006  00000003 [			z WORD 3 DUP(?)
+	    0000
+	   ]
+
+ 00000000			.code
+ 00000000			main proc
+					
+ 00000000  66| A1			mov ax, x
+	   00000000 R
+ 00000006  66| 83 C0 02			add ax, 2
+ 0000000A  66| 2B 05			sub ax, r
+	   00000004 R
+ 00000011  66| A3			mov z, ax
+	   00000006 R
+
+ 00000017  66| 8B 1D			mov bx, y
+	   00000002 R
+ 0000001E  66| 03 1D			add bx, r
+	   00000004 R
+ 00000025  66| 83 C3 09			add bx, 9
+ 00000029  66| 89 1D			mov [z+2], bx
+	   00000008 R
+
+ 00000030  66| 8B 0D			mov cx, y
+	   00000002 R
+ 00000037  66| 2B 0D			sub cx, x
+	   00000000 R
+ 0000003E  66| 83 C1 03			add cx, 3
+ 00000042  66| 89 0D			mov [z+4], cx
+	   0000000A R
+
+
+					
+					invoke ExitProcess,0
+ 00000049  6A 00	   *	    push   +000000000h
+ 0000004B  E8 00000000 E   *	    call   ExitProcess
+
+ 00000050			main endp
+				end main
+Microsoft (R) Macro Assembler Version 14.16.27026.1	    03/08/19 18:30:15
+Nonni2.asm						     Symbols 2 - 1
+
+
+
+
+Segments and Groups:
+
+                N a m e                 Size     Length   Align   Combine Class
+
+FLAT . . . . . . . . . . . . . .	GROUP
+STACK  . . . . . . . . . . . . .	32 Bit	 00001000 DWord	  Stack	  'STACK'	 
+_DATA  . . . . . . . . . . . . .	32 Bit	 0000000C DWord	  Public  'DATA'	
+_TEXT  . . . . . . . . . . . . .	32 Bit	 00000050 DWord	  Public  'CODE'	
+
+
+Procedures, parameters, and locals:
+
+                N a m e                 Type     Value    Attr
+
+ExitProcess  . . . . . . . . . .	P Near	 00000000 FLAT	Length= 00000000 External STDCALL
+main . . . . . . . . . . . . . .	P Near	 00000000 _TEXT	Length= 00000050 Public STDCALL
+
+
+Symbols:
+
+                N a m e                 Type     Value    Attr
+
+@CodeSize  . . . . . . . . . . .	Number	 00000000h   
+@DataSize  . . . . . . . . . . .	Number	 00000000h   
+@Interface . . . . . . . . . . .	Number	 00000003h   
+@Model . . . . . . . . . . . . .	Number	 00000007h   
+@code  . . . . . . . . . . . . .	Text   	 _TEXT
+@data  . . . . . . . . . . . . .	Text   	 FLAT
+@fardata?  . . . . . . . . . . .	Text   	 FLAT
+@fardata . . . . . . . . . . . .	Text   	 FLAT
+@stack . . . . . . . . . . . . .	Text   	 FLAT
+r  . . . . . . . . . . . . . . .	Word	 00000004 _DATA	
+x  . . . . . . . . . . . . . . .	Word	 00000000 _DATA	
+y  . . . . . . . . . . . . . . .	Word	 00000002 _DATA	
+z  . . . . . . . . . . . . . . .	Word	 00000006 _DATA	
+
+	   0 Warnings
+	   0 Errors
