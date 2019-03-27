@@ -14,18 +14,14 @@
 ExitProcess proto,dwExitCode:dword
 
 .data
-val1 BYTE 4
-counter BYTE 0
+byteVal SBYTE 30h, 40h, 50h, 0F6h
+wordVal WORD 1000h, 2000h, 3000h, 4000h
+dwordVal DWORD 88884444h, 9078 5634h, 00000005h, 12345678h
 
 .code
 main proc
-	mov eax,0
-	mov ebx,0
-	mov bl,6
-target: 
-	add bl,val1
-	inc counter
-	jmp target
+mov esi, OFFSET dwordVal
+mov al, [esi+6]
 	invoke ExitProcess,0
 main endp
 end main

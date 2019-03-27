@@ -1,4 +1,4 @@
-Microsoft (R) Macro Assembler Version 14.16.27027.1	    02/28/19 15:48:42
+Microsoft (R) Macro Assembler Version 14.16.27027.1	    03/14/19 13:49:02
 Sandbox.asm						     Page 1 - 1
 
 
@@ -18,24 +18,24 @@ Sandbox.asm						     Page 1 - 1
 				ExitProcess proto,dwExitCode:dword
 
  00000000			.data
- 00000000 04			val1 BYTE 4
- 00000001 00			counter BYTE 0
+ 00000000 30 40 50 F6		byteVal SBYTE 30h, 40h, 50h, 0F6h
+ 00000004 1000 2000 3000	wordVal WORD 1000h, 2000h, 3000h, 4000h
+	   4000
+ 0000000C 88884444		dwordVal DWORD 88884444h, 90785634h, 00000005h, 12345678h
+	   90785634
+	   00000005
+	   12345678
 
  00000000			.code
  00000000			main proc
- 00000000  B8 00000000			mov eax,0
- 00000005  BB 00000000			mov ebx,0
- 0000000A  B3 06			mov bl,6
- 0000000C			target: 
- 0000000C  02 1D 00000000 R		add bl,val1
- 00000012  FE 05 00000001 R		inc counter
- 00000018  EB F2			jmp target
+ 00000000  BE 0000000C R	mov esi, OFFSET dwordVal
+ 00000005  8A 46 06		mov al, [esi+6]
 					invoke ExitProcess,0
- 0000001A  6A 00	   *	    push   +000000000h
- 0000001C  E8 00000000 E   *	    call   ExitProcess
- 00000021			main endp
+ 00000008  6A 00	   *	    push   +000000000h
+ 0000000A  E8 00000000 E   *	    call   ExitProcess
+ 0000000F			main endp
 				end main
-Microsoft (R) Macro Assembler Version 14.16.27027.1	    02/28/19 15:48:42
+Microsoft (R) Macro Assembler Version 14.16.27027.1	    03/14/19 13:49:02
 Sandbox.asm						     Symbols 2 - 1
 
 
@@ -47,8 +47,8 @@ Segments and Groups:
 
 FLAT . . . . . . . . . . . . . .	GROUP
 STACK  . . . . . . . . . . . . .	32 Bit	 00001000 DWord	  Stack	  'STACK'	 
-_DATA  . . . . . . . . . . . . .	32 Bit	 00000002 DWord	  Public  'DATA'	
-_TEXT  . . . . . . . . . . . . .	32 Bit	 00000021 DWord	  Public  'CODE'	
+_DATA  . . . . . . . . . . . . .	32 Bit	 0000001C DWord	  Public  'DATA'	
+_TEXT  . . . . . . . . . . . . .	32 Bit	 0000000F DWord	  Public  'CODE'	
 
 
 Procedures, parameters, and locals:
@@ -56,8 +56,7 @@ Procedures, parameters, and locals:
                 N a m e                 Type     Value    Attr
 
 ExitProcess  . . . . . . . . . .	P Near	 00000000 FLAT	Length= 00000000 External STDCALL
-main . . . . . . . . . . . . . .	P Near	 00000000 _TEXT	Length= 00000021 Public STDCALL
-  target . . . . . . . . . . . .	L Near	 0000000C _TEXT	
+main . . . . . . . . . . . . . .	P Near	 00000000 _TEXT	Length= 0000000F Public STDCALL
 
 
 Symbols:
@@ -73,8 +72,9 @@ Symbols:
 @fardata?  . . . . . . . . . . .	Text   	 FLAT
 @fardata . . . . . . . . . . . .	Text   	 FLAT
 @stack . . . . . . . . . . . . .	Text   	 FLAT
-counter  . . . . . . . . . . . .	Byte	 00000001 _DATA	
-val1 . . . . . . . . . . . . . .	Byte	 00000000 _DATA	
+byteVal  . . . . . . . . . . . .	Byte	 00000000 _DATA	
+dwordVal . . . . . . . . . . . .	DWord	 0000000C _DATA	
+wordVal  . . . . . . . . . . . .	Word	 00000004 _DATA	
 
 	   0 Warnings
 	   0 Errors
