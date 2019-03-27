@@ -1,0 +1,70 @@
+Microsoft (R) Macro Assembler Version 14.16.27027.1	    03/27/19 09:45:12
+Logic_Ins.asm						     Page 1 - 1
+
+
+				; Bryan Nonni
+				; CSC 3210 - TR 345; Date: 03/27/2019
+				; Description: Write and run a program to find the values of each destination operand using two loop instruction
+				; Lab 10 Program 1 - Logical Instructions
+
+				.386
+				.model flat,stdcall
+				.stack 4096
+				ExitProcess proto,dwExitCode:dword
+ 00000000			.data
+
+ 00000000			.code
+ 00000000			main proc
+ 00000000  B0 6F		mov al,01101111b
+ 00000002  24 2D		and al,00101101b ; a. Al=2D
+ 00000004  B0 6D		mov al,6Dh
+ 00000006  24 4A		and al,4Ah ; b. Al=48
+ 00000008  B0 0F		mov al,00001111b
+ 0000000A  0C 61		or al,61h ; c. Al=6F
+ 0000000C  B0 94		mov al,94h
+ 0000000E  34 37		xor al, 37h ; d. Al=A3
+					invoke ExitProcess,0
+ 00000010  6A 00	   *	    push   +000000000h
+ 00000012  E8 00000000 E   *	    call   ExitProcess
+ 00000017			main endp
+				end main
+Microsoft (R) Macro Assembler Version 14.16.27027.1	    03/27/19 09:45:12
+Logic_Ins.asm						     Symbols 2 - 1
+
+
+
+
+Segments and Groups:
+
+                N a m e                 Size     Length   Align   Combine Class
+
+FLAT . . . . . . . . . . . . . .	GROUP
+STACK  . . . . . . . . . . . . .	32 Bit	 00001000 DWord	  Stack	  'STACK'	 
+_DATA  . . . . . . . . . . . . .	32 Bit	 00000000 DWord	  Public  'DATA'	
+_TEXT  . . . . . . . . . . . . .	32 Bit	 00000017 DWord	  Public  'CODE'	
+
+
+Procedures, parameters, and locals:
+
+                N a m e                 Type     Value    Attr
+
+ExitProcess  . . . . . . . . . .	P Near	 00000000 FLAT	Length= 00000000 External STDCALL
+main . . . . . . . . . . . . . .	P Near	 00000000 _TEXT	Length= 00000017 Public STDCALL
+
+
+Symbols:
+
+                N a m e                 Type     Value    Attr
+
+@CodeSize  . . . . . . . . . . .	Number	 00000000h   
+@DataSize  . . . . . . . . . . .	Number	 00000000h   
+@Interface . . . . . . . . . . .	Number	 00000003h   
+@Model . . . . . . . . . . . . .	Number	 00000007h   
+@code  . . . . . . . . . . . . .	Text   	 _TEXT
+@data  . . . . . . . . . . . . .	Text   	 FLAT
+@fardata?  . . . . . . . . . . .	Text   	 FLAT
+@fardata . . . . . . . . . . . .	Text   	 FLAT
+@stack . . . . . . . . . . . . .	Text   	 FLAT
+
+	   0 Warnings
+	   0 Errors

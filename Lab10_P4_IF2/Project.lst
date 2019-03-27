@@ -1,0 +1,76 @@
+Microsoft (R) Macro Assembler Version 14.16.27027.1	    03/27/19 09:41:47
+IF2.asm							     Page 1 - 1
+
+
+				; Bryan Nonni
+				; CSC 3210 - TR 345; Date: 03/27/2019
+				; Description: Write and run a program to find the values of each destination operand using two loop instruction
+				; Lab 10 Program 3 - If Statement 1
+
+				.386
+				.model flat,stdcall
+				.stack 4096
+				ExitProcess proto,dwExitCode:dword
+
+ 00000000			.data
+ 00000000 00			x BYTE 0
+
+ 00000000			.code
+ 00000000			main proc
+
+ 00000000  B3 05		mov bl, 5
+ 00000002  B1 09		mov cl, 9
+ 00000004  3A D9		cmp bl,cl
+ 00000006  77 06		ja  next
+ 00000008  B0 32		mov al,50		
+ 0000000A  B2 17		mov dl,23		
+ 0000000C  2A C2		sub al,dl		; AL = 1B
+ 0000000E			next:
+					
+					invoke ExitProcess,0
+ 0000000E  6A 00	   *	    push   +000000000h
+ 00000010  E8 00000000 E   *	    call   ExitProcess
+ 00000015			main endp
+				end main
+Microsoft (R) Macro Assembler Version 14.16.27027.1	    03/27/19 09:41:47
+IF2.asm							     Symbols 2 - 1
+
+
+
+
+Segments and Groups:
+
+                N a m e                 Size     Length   Align   Combine Class
+
+FLAT . . . . . . . . . . . . . .	GROUP
+STACK  . . . . . . . . . . . . .	32 Bit	 00001000 DWord	  Stack	  'STACK'	 
+_DATA  . . . . . . . . . . . . .	32 Bit	 00000001 DWord	  Public  'DATA'	
+_TEXT  . . . . . . . . . . . . .	32 Bit	 00000015 DWord	  Public  'CODE'	
+
+
+Procedures, parameters, and locals:
+
+                N a m e                 Type     Value    Attr
+
+ExitProcess  . . . . . . . . . .	P Near	 00000000 FLAT	Length= 00000000 External STDCALL
+main . . . . . . . . . . . . . .	P Near	 00000000 _TEXT	Length= 00000015 Public STDCALL
+  next . . . . . . . . . . . . .	L Near	 0000000E _TEXT	
+
+
+Symbols:
+
+                N a m e                 Type     Value    Attr
+
+@CodeSize  . . . . . . . . . . .	Number	 00000000h   
+@DataSize  . . . . . . . . . . .	Number	 00000000h   
+@Interface . . . . . . . . . . .	Number	 00000003h   
+@Model . . . . . . . . . . . . .	Number	 00000007h   
+@code  . . . . . . . . . . . . .	Text   	 _TEXT
+@data  . . . . . . . . . . . . .	Text   	 FLAT
+@fardata?  . . . . . . . . . . .	Text   	 FLAT
+@fardata . . . . . . . . . . . .	Text   	 FLAT
+@stack . . . . . . . . . . . . .	Text   	 FLAT
+x  . . . . . . . . . . . . . . .	Byte	 00000000 _DATA	
+
+	   0 Warnings
+	   0 Errors
