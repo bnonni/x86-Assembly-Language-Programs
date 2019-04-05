@@ -7,7 +7,8 @@
 ; size and type should be changed in the future.
 ; Use the XCHG instruction.
 ; The array’s elements are: “B”, “A”, “D”, “C”, “F”, “E”, “H”, “G”.
-; The array’s elements after running the program should look like: A, B, C, D, E, F, G, H  
+; The array’s elements after running the program should look like: A, B, C, D, E, F, G, H
+  
 .386
 .model flat,stdcall
 .stack 4096

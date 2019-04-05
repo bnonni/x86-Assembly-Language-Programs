@@ -17,26 +17,33 @@
 ExitProcess proto,dwExitCode:dword
 
 .data 
-	y DWORD ?
-	count BYTE ?
-
+	y DWORD 0,0,0,0,0,0,0,0,0,0,0,0,0,0,0
+	count DWORD 0
 .code
 main proc
 
+mov ecx, 0
+mov eax, 0
 mov ecx, 5
-mov eax, ecx
+mov count, ecx ; count = i = 5
+mov esi, OFFSET y
+mov ecx, 3 ; ecx = 3, new counter
 
 L1:
-	mov ecx, 3
-L2: 
+	cmp count, 0
+	je L4
+L2:
+	add eax, count
 	add eax, ecx
-	mov y, eax
+	mov [esi], eax
+	inc esi
+	mov eax, 0
 	loop L2
-	mov 
-loop L1
-
-
-
+L3:
+	mov ecx, 3
+	dec count
+	loop L1
+L4:
 	invoke ExitProcess,0
 
 main endp

@@ -1,52 +1,76 @@
-Microsoft (R) Macro Assembler Version 14.16.27027.1	    04/03/19 22:25:16
-Nonni1.asm						     Page 1 - 1
+Microsoft (R) Macro Assembler Version 14.16.27027.1	    04/05/19 16:33:16
+Nonni2.asm						     Page 1 - 1
 
 
 				; Student: Bryan Nonni
 				; Class: CSC3210
-				; Assignment#: 5-1
-				; Description:  Use a loop instruction with indirect addressing to reverse the elements of an array in place
-				; Do not copy the elements to any other array.
-				; Use the SIZEOF, TYPE, and LENGTHOF operators to make the program as flexible as possible if the array
-				; size and type should be changed in the future.
-				; Use the XCHG instruction.
-				; The array’s elements are: “B”, “A”, “D”, “C”, “F”, “E”, “H”, “G”.
-				; The array’s elements after running the program should look like: A, B, C, D, E, F, G, H  
+				; Assignment#: 5-2
+				; Description: Implement the following expression in assembly language:
+				; for (i = 5; i > 0; i--)
+				; {
+				; for(j = 3; j > 0; j--)
+				; {
+				; y = i + j ;
+				; }
+				; }
+				; Assume i and j are 32-bit registers and y is a list
+				  
 				.386
 				.model flat,stdcall
 				.stack 4096
 				ExitProcess proto,dwExitCode:dword
- 00000000			.data 
- 00000000 42 41 44 43 46		alphabet BYTE "B", "A", "D", "C", "F", "E", "H", "G"
-	   45 48 47
 
+ 00000000			.data 
+ 00000000 00000000			y DWORD 0,0,0,0,0,0,0,0,0,0,0,0,0,0,0
+	   00000000
+	   00000000
+	   00000000
+	   00000000
+	   00000000
+	   00000000
+	   00000000
+	   00000000
+	   00000000
+	   00000000
+	   00000000
+	   00000000
+	   00000000
+	   00000000
+ 0000003C 00000000			count DWORD 0
  00000000			.code
  00000000			main proc
- 00000000  BE 00000000 R		mov esi, OFFSET alphabet
- 00000005  A0 00000001 R		mov al, [alphabet+1]
- 0000000A  86 06			xchg [esi], al
- 0000000C  88 46 01			mov [esi+1], al
 
- 0000000F  A0 00000003 R		mov al, [alphabet+3]
- 00000014  86 46 02			xchg [esi+2], al
- 00000017  88 46 03			mov [esi+3], al
-					
- 0000001A  A0 00000005 R		mov al, [alphabet+5]
- 0000001F  86 46 04			xchg [esi+4], al
- 00000022  88 46 05			mov [esi+5], al
+ 00000000  B9 00000000		mov ecx, 0
+ 00000005  B8 00000000		mov eax, 0
+ 0000000A  B9 00000005		mov ecx, 5
+ 0000000F  89 0D 0000003C R	mov count, ecx ; count = i = 5
+ 00000015  BE 00000000 R	mov esi, OFFSET y
+ 0000001A  B9 00000003		mov ecx, 3 ; ecx = 3, new counter
 
- 00000025  A0 00000007 R		mov al, [alphabet+7]
- 0000002A  86 46 06			xchg [esi+6], al
- 0000002D  88 46 07			mov [esi+7], al
-
+ 0000001F			L1:
+ 0000001F  83 3D 0000003C R		cmp count, 0
+	   00
+ 00000026  74 1F			je L4
+ 00000028			L2:
+ 00000028  03 05 0000003C R		add eax, count
+ 0000002E  03 C1			add eax, ecx
+ 00000030  89 06			mov [esi], eax
+ 00000032  46				inc esi
+ 00000033  B8 00000000			mov eax, 0
+ 00000038  E2 EE			loop L2
+ 0000003A			L3:
+ 0000003A  B9 00000003			mov ecx, 3
+ 0000003F  FF 0D 0000003C R		dec count
+ 00000045  E2 D8			loop L1
+ 00000047			L4:
 					invoke ExitProcess,0
- 00000030  6A 00	   *	    push   +000000000h
- 00000032  E8 00000000 E   *	    call   ExitProcess
+ 00000047  6A 00	   *	    push   +000000000h
+ 00000049  E8 00000000 E   *	    call   ExitProcess
 
- 00000037			main endp
+ 0000004E			main endp
 				end main
-Microsoft (R) Macro Assembler Version 14.16.27027.1	    04/03/19 22:25:16
-Nonni1.asm						     Symbols 2 - 1
+Microsoft (R) Macro Assembler Version 14.16.27027.1	    04/05/19 16:33:16
+Nonni2.asm						     Symbols 2 - 1
 
 
 
@@ -57,8 +81,8 @@ Segments and Groups:
 
 FLAT . . . . . . . . . . . . . .	GROUP
 STACK  . . . . . . . . . . . . .	32 Bit	 00001000 DWord	  Stack	  'STACK'	 
-_DATA  . . . . . . . . . . . . .	32 Bit	 00000008 DWord	  Public  'DATA'	
-_TEXT  . . . . . . . . . . . . .	32 Bit	 00000037 DWord	  Public  'CODE'	
+_DATA  . . . . . . . . . . . . .	32 Bit	 00000040 DWord	  Public  'DATA'	
+_TEXT  . . . . . . . . . . . . .	32 Bit	 0000004E DWord	  Public  'CODE'	
 
 
 Procedures, parameters, and locals:
@@ -66,7 +90,11 @@ Procedures, parameters, and locals:
                 N a m e                 Type     Value    Attr
 
 ExitProcess  . . . . . . . . . .	P Near	 00000000 FLAT	Length= 00000000 External STDCALL
-main . . . . . . . . . . . . . .	P Near	 00000000 _TEXT	Length= 00000037 Public STDCALL
+main . . . . . . . . . . . . . .	P Near	 00000000 _TEXT	Length= 0000004E Public STDCALL
+  L1 . . . . . . . . . . . . . .	L Near	 0000001F _TEXT	
+  L2 . . . . . . . . . . . . . .	L Near	 00000028 _TEXT	
+  L3 . . . . . . . . . . . . . .	L Near	 0000003A _TEXT	
+  L4 . . . . . . . . . . . . . .	L Near	 00000047 _TEXT	
 
 
 Symbols:
@@ -82,7 +110,8 @@ Symbols:
 @fardata?  . . . . . . . . . . .	Text   	 FLAT
 @fardata . . . . . . . . . . . .	Text   	 FLAT
 @stack . . . . . . . . . . . . .	Text   	 FLAT
-alphabet . . . . . . . . . . . .	Byte	 00000000 _DATA	
+count  . . . . . . . . . . . . .	DWord	 0000003C _DATA	
+y  . . . . . . . . . . . . . . .	DWord	 00000000 _DATA	
 
 	   0 Warnings
 	   0 Errors
