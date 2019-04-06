@@ -36,6 +36,5 @@ main proc
 	mov [esi+7], al
 
 	invoke ExitProcess,0
-
 main endp
 end main
