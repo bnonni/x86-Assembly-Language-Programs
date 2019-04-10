@@ -1,0 +1,81 @@
+Microsoft (R) Macro Assembler Version 14.16.27027.1	    04/10/19 09:34:36
+iMul_iDiv.asm						     Page 1 - 1
+
+
+				; Bryan Nonni
+				; CSC 3210 - TR 345; Date: 04/10/2019
+				; Description: Write and run a priogram to fins the vlaue of Var4
+				; Declare var1, var2 and var3 as signed memory variables
+				; assign them, var1=-2, var2=20, var3=2
+				; Lab 12 Program 1.2 - iMul & iDiv
+				; var4=(var1*-5)/(-var2/var3)
+
+				.386
+				.model flat,stdcall
+				.stack 4096
+				ExitProcess proto,dwExitCode:dword
+ 00000000			.data
+ 00000000 FFFFFFFE		var1 DWORD -2
+ 00000004 00000014		var2 DWORD 20
+ 00000008 00000002		var3 DWORD 2
+
+ 00000000			.code
+ 00000000			main PROC
+
+ 00000000  A1 00000004 R		mov eax, var2		; begin right side
+ 00000005  F7 D8			neg eax				
+ 00000007  99				cdq					; sign-extend dividend
+ 00000008  F7 3D 00000008 R		idiv var3			; EDX=remainder
+ 0000000E  8B D8			mov ebx, eax		; begin left side
+ 00000010  B8 FFFFFFFB			mov eax, -5			; EDX:EAX = left side
+ 00000015  F7 2D 00000000 R		imul var1			; final division
+ 0000001B  F7 FB			idiv ebx			; quotient
+
+					invoke ExitProcess,0
+ 0000001D  6A 00	   *	    push   +000000000h
+ 0000001F  E8 00000000 E   *	    call   ExitProcess
+ 00000024			main endp
+				end main
+Microsoft (R) Macro Assembler Version 14.16.27027.1	    04/10/19 09:34:36
+iMul_iDiv.asm						     Symbols 2 - 1
+
+
+
+
+Segments and Groups:
+
+                N a m e                 Size     Length   Align   Combine Class
+
+FLAT . . . . . . . . . . . . . .	GROUP
+STACK  . . . . . . . . . . . . .	32 Bit	 00001000 DWord	  Stack	  'STACK'	 
+_DATA  . . . . . . . . . . . . .	32 Bit	 0000000C DWord	  Public  'DATA'	
+_TEXT  . . . . . . . . . . . . .	32 Bit	 00000024 DWord	  Public  'CODE'	
+
+
+Procedures, parameters, and locals:
+
+                N a m e                 Type     Value    Attr
+
+ExitProcess  . . . . . . . . . .	P Near	 00000000 FLAT	Length= 00000000 External STDCALL
+main . . . . . . . . . . . . . .	P Near	 00000000 _TEXT	Length= 00000024 Public STDCALL
+
+
+Symbols:
+
+                N a m e                 Type     Value    Attr
+
+@CodeSize  . . . . . . . . . . .	Number	 00000000h   
+@DataSize  . . . . . . . . . . .	Number	 00000000h   
+@Interface . . . . . . . . . . .	Number	 00000003h   
+@Model . . . . . . . . . . . . .	Number	 00000007h   
+@code  . . . . . . . . . . . . .	Text   	 _TEXT
+@data  . . . . . . . . . . . . .	Text   	 FLAT
+@fardata?  . . . . . . . . . . .	Text   	 FLAT
+@fardata . . . . . . . . . . . .	Text   	 FLAT
+@stack . . . . . . . . . . . . .	Text   	 FLAT
+var1 . . . . . . . . . . . . . .	DWord	 00000000 _DATA	
+var2 . . . . . . . . . . . . . .	DWord	 00000004 _DATA	
+var3 . . . . . . . . . . . . . .	DWord	 00000008 _DATA	
+
+	   0 Warnings
+	   0 Errors

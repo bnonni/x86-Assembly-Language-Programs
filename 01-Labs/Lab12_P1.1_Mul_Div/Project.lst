@@ -1,0 +1,81 @@
+Microsoft (R) Macro Assembler Version 14.16.27027.1	    04/10/19 09:16:46
+Mul_Div.asm						     Page 1 - 1
+
+
+				; Bryan Nonni
+				; CSC 3210 - TR 345; Date: 04/03/2019
+				; Description: Write and run a program to fins the value of Var4
+				; Decalre var1 and var2 as unsigned memory variables and assign them as var1=40, var2=13
+				; var4=(var1*5)/(var2-3)
+				; Lab 12 Program 1 - Multiplication & Division
+
+				.386
+				.model flat,stdcall
+				.stack 4096
+				ExitProcess proto,dwExitCode:dword
+
+ 00000000			.data
+ 00000000 00000028		var1 DWORD 40
+ 00000004 0000000D		var2 DWORD 13
+ 00000008 00000000		var4 DWORD 0
+
+ 00000000			.code
+ 00000000			main PROC
+
+ 00000000  A1 00000000 R		mov eax, var1		;left side
+ 00000005  BB 00000005			mov ebx, 5			
+ 0000000A  F7 E3			mul ebx				;EDX:EAX = product
+ 0000000C  8B 1D 00000004 R		mov ebx, var2		; right side
+ 00000012  83 EB 03			sub ebx, 3
+ 00000015  F7 F3			div ebx				;quotient
+ 00000017  A3 00000008 R		mov var4, eax
+
+
+					invoke ExitProcess,0
+ 0000001C  6A 00	   *	    push   +000000000h
+ 0000001E  E8 00000000 E   *	    call   ExitProcess
+ 00000023			main endp
+				end main
+Microsoft (R) Macro Assembler Version 14.16.27027.1	    04/10/19 09:16:46
+Mul_Div.asm						     Symbols 2 - 1
+
+
+
+
+Segments and Groups:
+
+                N a m e                 Size     Length   Align   Combine Class
+
+FLAT . . . . . . . . . . . . . .	GROUP
+STACK  . . . . . . . . . . . . .	32 Bit	 00001000 DWord	  Stack	  'STACK'	 
+_DATA  . . . . . . . . . . . . .	32 Bit	 0000000C DWord	  Public  'DATA'	
+_TEXT  . . . . . . . . . . . . .	32 Bit	 00000023 DWord	  Public  'CODE'	
+
+
+Procedures, parameters, and locals:
+
+                N a m e                 Type     Value    Attr
+
+ExitProcess  . . . . . . . . . .	P Near	 00000000 FLAT	Length= 00000000 External STDCALL
+main . . . . . . . . . . . . . .	P Near	 00000000 _TEXT	Length= 00000023 Public STDCALL
+
+
+Symbols:
+
+                N a m e                 Type     Value    Attr
+
+@CodeSize  . . . . . . . . . . .	Number	 00000000h   
+@DataSize  . . . . . . . . . . .	Number	 00000000h   
+@Interface . . . . . . . . . . .	Number	 00000003h   
+@Model . . . . . . . . . . . . .	Number	 00000007h   
+@code  . . . . . . . . . . . . .	Text   	 _TEXT
+@data  . . . . . . . . . . . . .	Text   	 FLAT
+@fardata?  . . . . . . . . . . .	Text   	 FLAT
+@fardata . . . . . . . . . . . .	Text   	 FLAT
+@stack . . . . . . . . . . . . .	Text   	 FLAT
+var1 . . . . . . . . . . . . . .	DWord	 00000000 _DATA	
+var2 . . . . . . . . . . . . . .	DWord	 00000004 _DATA	
+var4 . . . . . . . . . . . . . .	DWord	 00000008 _DATA	
+
+	   0 Warnings
+	   0 Errors
