@@ -13,15 +13,37 @@
 .stack 4096
 ExitProcess proto,dwExitCode:dword
 
-.data
-byteVal SBYTE 30h, 40h, 50h, 0F6h
-wordVal WORD 1000h, 2000h, 3000h, 4000h
-dwordVal DWORD 88884444h, 9078 5634h, 00000005h, 12345678h
+.data 
+	A SWORD 9
+	B SWORD 8
+	X SWORD 11
 
 .code
-main proc
-mov esi, OFFSET dwordVal
-mov al, [esi+6]
+	main proc
+		mov ax, A
+		mov bx, B
+	while:
+		cmp X, 0
+		jle over
+		cmp X, 3
+		je else
+		cmp X, ax
+		jle or
+		sub X, 2
+		jmp while
+	or:
+		cmp X, bx
+		jge else
+		sub X, 2
+		jmp while
+
+	else:
+		dec X
+		jmp while
+
+	over:
+		mov ecx, X
+
 	invoke ExitProcess,0
 main endp
 end main

@@ -1,0 +1,117 @@
+Microsoft (R) Macro Assembler Version 14.16.27027.1	    04/19/19 14:49:55
+Nonni2.asm						     Page 1 - 1
+
+
+				; Student: Bryan Nonni
+				; Class: CSC3210
+				; Assignment#: 6-2
+				; Description: Write an assembly program to implement the following.
+				; while X > 0
+				; if X != 3 AND (X > A OR X < B)
+				;	 X = X – 2
+				; else
+				;	X = X – 1
+				; end while
+				; Use short-circuit evaluation
+				; Assume that A, B, and X are 16-bit signed integers variables
+				; Assume that A=9, B=8, and X=11
+
+				.386
+				.model flat,stdcall
+				.stack 4096
+				ExitProcess proto, dwExitCode:dword
+
+ 00000000			.data 
+				; Declare vars
+ 00000000 0009				A SWORD 9
+ 00000002 0008				B SWORD 8
+ 00000004 000B				X SWORD 11
+ 00000000			.code
+ 00000000			main proc
+				; move A & B to 16-bit registers
+ 00000000  66| A1			mov ax, A 
+	   00000000 R
+ 00000006  66| 8B 1D			mov bx, B
+	   00000002 R
+				; Initiate while loop
+ 0000000D			while_loop:
+ 0000000D  66| 83 3D			cmp X, 0	; Check if X = 0 to end while loop
+	   00000004 R 00
+ 00000015  7E 39			jle end_while
+ 00000017  66| 83 3D			cmp X, 3
+	   00000004 R 03
+ 0000001F  74 26			je else_condition
+ 00000021  66| 39 05			cmp X, ax
+	   00000004 R
+ 00000028  7E 0A			jle or_condition
+ 0000002A  66| 83 2D			sub X, 2
+	   00000004 R 02
+ 00000032  EB D9			jmp while_loop
+
+ 00000034			or_condition:
+ 00000034  66| 39 1D			cmp X, bx
+	   00000004 R
+ 0000003B  7D 0A			jge else_condition
+ 0000003D  66| 83 2D			sub X, 2
+	   00000004 R 02
+ 00000045  EB C6			jmp while_loop
+
+ 00000047			else_condition:
+ 00000047  66| FF 0D			dec X
+	   00000004 R
+ 0000004E  EB BD			jmp while_loop
+
+ 00000050			end_while:
+
+					invoke ExitProcess,0
+ 00000050  6A 00	   *	    push   +000000000h
+ 00000052  E8 00000000 E   *	    call   ExitProcess
+ 00000057			main endp
+				end main
+Microsoft (R) Macro Assembler Version 14.16.27027.1	    04/19/19 14:49:55
+Nonni2.asm						     Symbols 2 - 1
+
+
+
+
+Segments and Groups:
+
+                N a m e                 Size     Length   Align   Combine Class
+
+FLAT . . . . . . . . . . . . . .	GROUP
+STACK  . . . . . . . . . . . . .	32 Bit	 00001000 DWord	  Stack	  'STACK'	 
+_DATA  . . . . . . . . . . . . .	32 Bit	 00000006 DWord	  Public  'DATA'	
+_TEXT  . . . . . . . . . . . . .	32 Bit	 00000057 DWord	  Public  'CODE'	
+
+
+Procedures, parameters, and locals:
+
+                N a m e                 Type     Value    Attr
+
+ExitProcess  . . . . . . . . . .	P Near	 00000000 FLAT	Length= 00000000 External STDCALL
+main . . . . . . . . . . . . . .	P Near	 00000000 _TEXT	Length= 00000057 Public STDCALL
+  while_loop . . . . . . . . . .	L Near	 0000000D _TEXT	
+  or_condition . . . . . . . . .	L Near	 00000034 _TEXT	
+  else_condition . . . . . . . .	L Near	 00000047 _TEXT	
+  end_while  . . . . . . . . . .	L Near	 00000050 _TEXT	
+
+
+Symbols:
+
+                N a m e                 Type     Value    Attr
+
+@CodeSize  . . . . . . . . . . .	Number	 00000000h   
+@DataSize  . . . . . . . . . . .	Number	 00000000h   
+@Interface . . . . . . . . . . .	Number	 00000003h   
+@Model . . . . . . . . . . . . .	Number	 00000007h   
+@code  . . . . . . . . . . . . .	Text   	 _TEXT
+@data  . . . . . . . . . . . . .	Text   	 FLAT
+@fardata?  . . . . . . . . . . .	Text   	 FLAT
+@fardata . . . . . . . . . . . .	Text   	 FLAT
+@stack . . . . . . . . . . . . .	Text   	 FLAT
+A  . . . . . . . . . . . . . . .	Word	 00000000 _DATA	
+B  . . . . . . . . . . . . . . .	Word	 00000002 _DATA	
+X  . . . . . . . . . . . . . . .	Word	 00000004 _DATA	
+
+	   0 Warnings
+	   0 Errors

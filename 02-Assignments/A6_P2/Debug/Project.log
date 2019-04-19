@@ -1,0 +1,3 @@
+﻿  Assembling Nonni2.asm...
+Nonni2.asm(52): fatal error A1008: unmatched macro nesting
+C:\Program Files (x86)\Microsoft Visual Studio\2017\Community\Common7\IDE\VC\VCTargets\BuildCustomizations\masm.targets(69,5): error MSB3721: The command "ml.exe /c /nologo /Sg /Zi /Fo"Debug\Nonni2.obj" /Fl"Project.lst" /I "c:\Irvine" /W3 /errorReport:prompt  /TaNonni2.asm" exited with code 1.

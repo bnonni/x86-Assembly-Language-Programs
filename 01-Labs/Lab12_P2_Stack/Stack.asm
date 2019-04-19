@@ -1,37 +1,39 @@
 ; Bryan Nonni
 ; CSC 3210 - TR 345; Date: 04/10/2019
-; Description: Write and run the following program. Will the program crash? Why?
-; Lab 13 Program 2 - C Calling Convention
+; Description: Write and run a program to find the values of aName
+; Lab 12 Program 2 - Stack
 
-Include Irvine32.inc
+; ANSWER:
+; HEX: 0000006c,0000006e,00000063,0000006f,00000069,0000006e,00000020,0000004c,00000061,0000006d,00000061,00000068,00000062,00000072,00000076  
+; aNAME: n...l...o...c...n...i...L... ...m...a...h...a...r...b...A
 
 .386
+.model flat,stdcall
 .stack 4096
 ExitProcess proto,dwExitCode:dword
+.data
+aName BYTE "Abraham Lincoln", 0
+nameSize = ($ - aName) - 1
 
 .code
 main PROC
-	call example1
-	add al, 1
+; Push the name on  the stack.
+	mov ecx, nameSize
+	mov esi, 0
+L1:
+	movzx eax, aName[esi]
+	push eax
+	inc esi
+	loop L1
+; Pop the name from the stack, in reverse, and store in the aName array
+	mov ecx, nameSize
+	mov esi, 0
+L2:
+	pop eax
+	mov aName[esi], al
+	inc esi
+	loop L2
 
-	invoke ExitProcess, 0
+	invoke ExitProcess,0
 main endp
-
-example1 proc
-	push 6
-	push 5
-	call addtwo
-	add esp,4  ;comment this line and see what happen 
-	ret
-example1 endp
-
-addtwo proc
-	push ebp
-	mov ebp,esp	
-	mov eax, [ebp+12]
-	add eax, [ebp+8]
-	pop ebp
-	ret 
-addtwo endp
-
 end main
