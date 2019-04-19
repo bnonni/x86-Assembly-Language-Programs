@@ -1,0 +1,3 @@
+﻿  Assembling Sandbox.asm...
+Sandbox.asm(49): fatal error A1008: unmatched macro nesting
+C:\Program Files (x86)\Microsoft Visual Studio\2017\Community\Common7\IDE\VC\VCTargets\BuildCustomizations\masm.targets(69,5): error MSB3721: The command "ml.exe /c /nologo /Sg /Zi /Fo"Debug\Sandbox.obj" /Fl"Project.lst" /I "c:\Irvine" /W3 /errorReport:prompt  /TaSandbox.asm" exited with code 1.
