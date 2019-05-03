@@ -1,24 +1,20 @@
-Microsoft (R) Macro Assembler Version 14.16.27027.1	    05/03/19 16:22:49
-Nonni1.asm						     Page 1 - 1
+Microsoft (R) Macro Assembler Version 14.16.27027.1	    05/03/19 15:48:00
+Clear_Screen.asm					     Page 1 - 1
 
 
 				; Student: Bryan Nonni
-				; Chapter 3 example
+				; Class: CSC 3210 - TR 1545, LAB W 900;
+				; Assignment: Assignment 7 - Program 1
+				; Description: Write and run these two procedures.
+				; val1 = (val3 – val2) * (val4 / val3) - (val2 * 2)
 
-				.386
-				.model flat,stdcall
-				.stack 4096
-				ExitProcess proto,dwExitCode:dword
-
-				Include Irvine32.inc
+				include Irvine32.inc
 			      C ; Include file for Irvine32.lib             (Irvine32.inc)
 			      C 
 			      C ;OPTION CASEMAP:NONE		; optional: make identifiers case-sensitive
 			      C 
 			      C INCLUDE SmallWin.inc		; MS-Windows prototypes, structures, and constants
 			      C .NOLIST
-			      C .MODEL flat, stdcall
-c:\Irvine\SmallWin.inc(11) : warning A4011:multiple .MODEL directives found : .MODEL ignored
 			      C .LIST
 			      C 
 			      C INCLUDE VirtualKeys.inc
@@ -31,39 +27,46 @@ c:\Irvine\SmallWin.inc(11) : warning A4011:multiple .MODEL directives found : .M
 			      C .LIST
 			      C 
 
+				.386
+				.model flat, stdcall
+Clear_Screen.asm(10) : warning A4011:multiple .MODEL directives found : .MODEL ignored
+				.stack 4096
+				ExitProcess proto,dwExitCode:dword
+
  00000000			.data
- 00000000 00000000		val1 SDWORD ?
- 00000004 00000000		val2 SDWORD ?
- 00000008 00000000		val3 SDWORD ?
- 0000000C 00000000		val4 SDWORD ?
- 00000010 45 6E 74 65 72	myPrompt BYTE "Enter Signed Integer: ", 0
+ 00000000 45 6E 74 65 72	prompt BYTE "Enter Signed Integer: " 
 	   20 53 69 67 6E
 	   65 64 20 49 6E
 	   74 65 67 65 72
-	   3A 20 00
+	   3A 20
+ 00000016 00000000		val1 SDWORD 0
+ 0000001A 00000000		val2 SDWORD 0
+ 0000001E 00000000		val3 SDWORD 0
+ 00000022 00000000		val4 SDWORD 0
 
  00000000			.code
- 00000000			main proc
-					
- 00000000  BE 00000004 R		mov esi, OFFSET val2		; Move address of val2 to esi
- 00000005  B9 00000003			mov ecx, 3
-				 
- 0000000A			 readIntegers:
- 0000000A  E8 00000000 E		call Clrscr					; Clear screen
- 0000000F  BA 00000010 R		mov edx, offset myPrompt	; Move prompt to edx to be displayed
- 00000014  E8 00000000 E		call Writestring			; Display prompt
- 00000019  E8 00000000 E		call Readint				; Read int to eax
- 0000001E  89 06			mov [esi], eax				; mov eax value to [esi] = val2
- 00000020  46				inc esi						; Increment esi to val3, val4
- 00000021  E2 E7			loop readIntegers			; Loop back to beginning
+ 00000000			main PROC
+ 00000000  B9 00000003			mov ecx, 3
 
-				 exit
- 00000023  6A 00	   *	    push   +000000000h
- 00000025  E8 00000000 E   *	    call   ExitProcess
- 0000002A			main endp
-				end main 
-Microsoft (R) Macro Assembler Version 14.16.27027.1	    05/03/19 16:22:49
-Nonni1.asm						     Symbols 2 - 1
+ 00000005			getInts:
+ 00000005  E8 00000000 E		call Clrscr				; Clear screen
+ 0000000A  BA 00000000 R		mov edx, OFFSET prompt
+ 0000000F  E8 00000000 E		call Writestring
+ 00000014  89 06			mov [esi], eax
+
+ 00000016  E2 ED			loop getInts
+
+					call 
+Clear_Screen.asm(33) : error A2008:syntax error : in instruction
+					
+
+					invoke ExitProcess, 0
+ 00000018  6A 00	   *	    push   +000000000h
+ 0000001A  E8 00000000 E   *	    call   ExitProcess
+ 0000001F			main endp
+				end main
+Microsoft (R) Macro Assembler Version 14.16.27027.1	    05/03/19 15:48:00
+Clear_Screen.asm					     Symbols 2 - 1
 
 
 
@@ -155,9 +158,9 @@ Segments and Groups:
                 N a m e                 Size     Length   Align   Combine Class
 
 FLAT . . . . . . . . . . . . . .	GROUP
-STACK  . . . . . . . . . . . . .	32 Bit	 00001000 DWord	  Stack	  'STACK'	 
-_DATA  . . . . . . . . . . . . .	32 Bit	 00000027 DWord	  Public  'DATA'	
-_TEXT  . . . . . . . . . . . . .	32 Bit	 0000002A DWord	  Public  'CODE'	
+STACK  . . . . . . . . . . . . .	32 Bit	 00001000 Para	  Stack	  'STACK'	 
+_DATA  . . . . . . . . . . . . .	32 Bit	 00000026 Para	  Public  'DATA'	
+_TEXT  . . . . . . . . . . . . .	32 Bit	 0000001F Para	  Public  'CODE'	
 
 
 Procedures, parameters, and locals:
@@ -264,8 +267,8 @@ WriteStackFrame  . . . . . . . .	P Near	 00000000 FLAT	Length= 00000000 External
 WriteString  . . . . . . . . . .	P Near	 00000000 FLAT	Length= 00000000 External STDCALL
 WriteToFile  . . . . . . . . . .	P Near	 00000000 FLAT	Length= 00000000 External STDCALL
 WriteWindowsMsg  . . . . . . . .	P Near	 00000000 FLAT	Length= 00000000 External STDCALL
-main . . . . . . . . . . . . . .	P Near	 00000000 _TEXT	Length= 0000002A Public STDCALL
-  readIntegers . . . . . . . . .	L Near	 0000000A _TEXT	
+main . . . . . . . . . . . . . .	P Near	 00000000 _TEXT	Length= 0000001F Public STDCALL
+  getInts  . . . . . . . . . . .	L Near	 00000005 _TEXT	
 printf . . . . . . . . . . . . .	P Near	 00000000 FLAT	Length= 00000000 External C
 scanf  . . . . . . . . . . . . .	P Near	 00000000 FLAT	Length= 00000000 External C
 wsprintfA  . . . . . . . . . . .	P Near	 00000000 FLAT	Length= 00000000 External C
@@ -498,15 +501,15 @@ lightGreen . . . . . . . . . . .	Number	 0000000Ah
 lightMagenta . . . . . . . . . .	Number	 0000000Dh   
 lightRed . . . . . . . . . . . .	Number	 0000000Ch   
 magenta  . . . . . . . . . . . .	Number	 00000005h   
-myPrompt . . . . . . . . . . . .	Byte	 00000010 _DATA	
+prompt . . . . . . . . . . . . .	Byte	 00000000 _DATA	
 red  . . . . . . . . . . . . . .	Number	 00000004h   
-val1 . . . . . . . . . . . . . .	DWord	 00000000 _DATA	
-val2 . . . . . . . . . . . . . .	DWord	 00000004 _DATA	
-val3 . . . . . . . . . . . . . .	DWord	 00000008 _DATA	
-val4 . . . . . . . . . . . . . .	DWord	 0000000C _DATA	
+val1 . . . . . . . . . . . . . .	DWord	 00000016 _DATA	
+val2 . . . . . . . . . . . . . .	DWord	 0000001A _DATA	
+val3 . . . . . . . . . . . . . .	DWord	 0000001E _DATA	
+val4 . . . . . . . . . . . . . .	DWord	 00000022 _DATA	
 white  . . . . . . . . . . . . .	Number	 0000000Fh   
 wsprintf . . . . . . . . . . . .	Text   	 wsprintfA
 yellow . . . . . . . . . . . . .	Number	 0000000Eh   
 
 	   1 Warnings
-	   0 Errors
+	   1 Errors

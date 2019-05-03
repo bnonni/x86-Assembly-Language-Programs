@@ -1,0 +1,4 @@
+﻿  Assembling Clear_Screen.asm...
+Clear_Screen.asm(10): warning A4011: multiple .MODEL directives found : .MODEL ignored
+Clear_Screen.asm(33): error A2008: syntax error : in instruction
+C:\Program Files (x86)\Microsoft Visual Studio\2017\Community\Common7\IDE\VC\VCTargets\BuildCustomizations\masm.targets(69,5): error MSB3721: The command "ml.exe /c /nologo /Sg /Zi /Fo"Debug\Clear_Screen.obj" /Fl"Project.lst" /I "c:\Irvine" /W3 /errorReport:prompt  /TaClear_Screen.asm" exited with code 1.
