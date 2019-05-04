@@ -1,32 +1,30 @@
-; Bryan Nonni
-; CSC 3210 - TR 345; Date: 04/10/2019
-; Description: Write and run a priogram to fins the vlaue of Var4
-; Declare var1, var2 and var3 as signed memory variables
-; assign them, var1=-2, var2=20, var3=2
-; Lab 12 Program 1.2 - iMul & iDiv
-; var4=(var1*-5)/(-var2/var3)
+; Student: Bryan Nonni
+; Class: CSC3210 - TR 1545
+; Assignment#: 7 - Program 1												
+; Description: This program calculates the sum of values in a given array using ArraySum Sub procedure. Array DWORD 8, 3, 12, 9, 2, 20, 15, 6, 5
 
 .386
 .model flat,stdcall
 .stack 4096
 ExitProcess proto,dwExitCode:dword
+
+Include Irvine32.inc
+
 .data
-var1 DWORD -2
-var2 DWORD 20
-var3 DWORD 2
+Array DWORD 8, 3, 12, 9, 2, 20, 15, 6, 5
+val1 DWORD 0
 
 .code
-main PROC
+main proc
+	
+ 
 
-	mov eax, var2		; begin right side
-	neg eax				
-	cdq					; sign-extend dividend
-	idiv var3			; EDX=remainder
-	mov ebx, eax		; begin left side
-	mov eax, -5			; EDX:EAX = left side
-	imul var1			; final division
-	idiv ebx			; quotient
 
-	invoke ExitProcess,0
+ exit
 main endp
-end main
+end main 
+
+ArraySum Proc, Array:DWORD, ArraySize:DWORD, tempSum:DWORD
+
+
+ArraySum endp
