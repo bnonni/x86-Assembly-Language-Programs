@@ -1,9 +1,11 @@
-Microsoft (R) Macro Assembler Version 14.16.27027.1	    05/03/19 16:22:49
+Microsoft (R) Macro Assembler Version 14.16.27027.1	    05/03/19 20:14:17
 Nonni1.asm						     Page 1 - 1
 
 
 				; Student: Bryan Nonni
-				; Chapter 3 example
+				; Class: CSC3210 - TR 1545
+				; Assignment#: 7 - Program 1												6  -   3   *   12     6    -   3   * 2
+				; Description: This program implements the mathmatical expression val1 = (val3 – val2) * (val4 / val3) - (val2 * 2)
 
 				.386
 				.model flat,stdcall
@@ -32,11 +34,11 @@ c:\Irvine\SmallWin.inc(11) : warning A4011:multiple .MODEL directives found : .M
 			      C 
 
  00000000			.data
- 00000000 00000000		val1 SDWORD ?
- 00000004 00000000		val2 SDWORD ?
- 00000008 00000000		val3 SDWORD ?
- 0000000C 00000000		val4 SDWORD ?
- 00000010 45 6E 74 65 72	myPrompt BYTE "Enter Signed Integer: ", 0
+ 00000000 00000000		val1 SDWORD 0
+ 00000004 00000000		val2 SDWORD 0
+ 00000008 00000000		val3 SDWORD 0
+ 0000000C 00000000		val4 SDWORD 0
+ 00000010 45 6E 74 65 72	prompt BYTE "Enter Signed Integer: ", 0
 	   20 53 69 67 6E
 	   65 64 20 49 6E
 	   74 65 67 65 72
@@ -44,25 +46,41 @@ c:\Irvine\SmallWin.inc(11) : warning A4011:multiple .MODEL directives found : .M
 
  00000000			.code
  00000000			main proc
-					
- 00000000  BE 00000004 R		mov esi, OFFSET val2		; Move address of val2 to esi
- 00000005  B9 00000003			mov ecx, 3
+ 00000000  B8 00000000			mov eax, 0					; Clear eax
+ 00000005  BB 00000000			mov ebx, 0					; Clear ebx
+ 0000000A  B9 00000000			mov ecx, 0					; Clear ecx
+ 0000000F  BA 00000000			mov edx, 0					; Clear edx
+ 00000014  BE 00000004 R		mov esi, OFFSET val2		; Move address of val2 to esi
+ 00000019  B9 00000003			mov ecx, 3					; Move 3 to ecx for loop counter
 				 
- 0000000A			 readIntegers:
- 0000000A  E8 00000000 E		call Clrscr					; Clear screen
- 0000000F  BA 00000010 R		mov edx, offset myPrompt	; Move prompt to edx to be displayed
- 00000014  E8 00000000 E		call Writestring			; Display prompt
- 00000019  E8 00000000 E		call Readint				; Read int to eax
- 0000001E  89 06			mov [esi], eax				; mov eax value to [esi] = val2
- 00000020  46				inc esi						; Increment esi to val3, val4
- 00000021  E2 E7			loop readIntegers			; Loop back to beginning
+ 0000001E			 readIntegers:
+ 0000001E  E8 00000000 E		call Clrscr					; Clear screen
+ 00000023  BA 00000010 R		mov edx, offset prompt	; Move prompt to edx to be displayed
+ 00000028  E8 00000000 E		call Writestring			; Display prompt
+ 0000002D  E8 00000000 E		call Readint				; Read int to eax
+ 00000032  89 06			mov [esi], eax				; mov eax value to [esi]
+ 00000034  83 C6 04			add esi, 4					; Increment esi to next val
+ 00000037  E2 E5		    loop readIntegers			; Loop back to beginning
+
+ 00000039  BA 00000000			mov edx, 0					; Clear address of prompt
+ 0000003E  A1 0000000C R		mov eax, val4				; Move val4 to eax
+ 00000043  F7 3D 00000008 R		idiv val3					; Signed divide eax by val3
+ 00000049  8B D8			mov ebx, eax				; Move eax to ebx for later use
+ 0000004B  A1 00000008 R		mov eax, val3				; Move val3 to eax
+ 00000050  2B 05 00000004 R		sub eax, val2				; Subtract val2 from eax
+ 00000056  F7 EB			imul ebx					; Signed multiply eax by ebx
+ 00000058  8B C8			mov ecx, eax				; Move eax to ecx
+ 0000005A  B8 00000002			mov eax, 2					; Move 2 to eax
+ 0000005F  F7 2D 00000004 R		imul val2					; Signed multiply eax by val2
+ 00000065  2B C8			sub ecx, eax				; Subtract eax from ecx
+ 00000067  89 0D 00000000 R		mov val1, ecx				; Move ecx to val1
 
 				 exit
- 00000023  6A 00	   *	    push   +000000000h
- 00000025  E8 00000000 E   *	    call   ExitProcess
- 0000002A			main endp
+ 0000006D  6A 00	   *	    push   +000000000h
+ 0000006F  E8 00000000 E   *	    call   ExitProcess
+ 00000074			main endp
 				end main 
-Microsoft (R) Macro Assembler Version 14.16.27027.1	    05/03/19 16:22:49
+Microsoft (R) Macro Assembler Version 14.16.27027.1	    05/03/19 20:14:17
 Nonni1.asm						     Symbols 2 - 1
 
 
@@ -157,7 +175,7 @@ Segments and Groups:
 FLAT . . . . . . . . . . . . . .	GROUP
 STACK  . . . . . . . . . . . . .	32 Bit	 00001000 DWord	  Stack	  'STACK'	 
 _DATA  . . . . . . . . . . . . .	32 Bit	 00000027 DWord	  Public  'DATA'	
-_TEXT  . . . . . . . . . . . . .	32 Bit	 0000002A DWord	  Public  'CODE'	
+_TEXT  . . . . . . . . . . . . .	32 Bit	 00000074 DWord	  Public  'CODE'	
 
 
 Procedures, parameters, and locals:
@@ -264,8 +282,8 @@ WriteStackFrame  . . . . . . . .	P Near	 00000000 FLAT	Length= 00000000 External
 WriteString  . . . . . . . . . .	P Near	 00000000 FLAT	Length= 00000000 External STDCALL
 WriteToFile  . . . . . . . . . .	P Near	 00000000 FLAT	Length= 00000000 External STDCALL
 WriteWindowsMsg  . . . . . . . .	P Near	 00000000 FLAT	Length= 00000000 External STDCALL
-main . . . . . . . . . . . . . .	P Near	 00000000 _TEXT	Length= 0000002A Public STDCALL
-  readIntegers . . . . . . . . .	L Near	 0000000A _TEXT	
+main . . . . . . . . . . . . . .	P Near	 00000000 _TEXT	Length= 00000074 Public STDCALL
+  readIntegers . . . . . . . . .	L Near	 0000001E _TEXT	
 printf . . . . . . . . . . . . .	P Near	 00000000 FLAT	Length= 00000000 External C
 scanf  . . . . . . . . . . . . .	P Near	 00000000 FLAT	Length= 00000000 External C
 wsprintfA  . . . . . . . . . . .	P Near	 00000000 FLAT	Length= 00000000 External C
@@ -498,7 +516,7 @@ lightGreen . . . . . . . . . . .	Number	 0000000Ah
 lightMagenta . . . . . . . . . .	Number	 0000000Dh   
 lightRed . . . . . . . . . . . .	Number	 0000000Ch   
 magenta  . . . . . . . . . . . .	Number	 00000005h   
-myPrompt . . . . . . . . . . . .	Byte	 00000010 _DATA	
+prompt . . . . . . . . . . . . .	Byte	 00000010 _DATA	
 red  . . . . . . . . . . . . . .	Number	 00000004h   
 val1 . . . . . . . . . . . . . .	DWord	 00000000 _DATA	
 val2 . . . . . . . . . . . . . .	DWord	 00000004 _DATA	
