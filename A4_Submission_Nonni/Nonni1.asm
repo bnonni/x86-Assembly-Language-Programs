@@ -29,6 +29,8 @@ main proc
 	add al, val3
 	movsx eax, al 
 
+
+
 	invoke ExitProcess,0
 
 main endp
