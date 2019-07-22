@@ -37,11 +37,7 @@ ArraySum Proc
 sumArrayLoop:
 	add esi, TYPE DWORD
    	add eax, [esi]
-	cmp ecx, 0
-	je exitArraySum
 	loop sumArrayLoop
-
-exitArraySum:
 	pop ebp
 	ret 8
 

@@ -1,4 +1,4 @@
-Microsoft (R) Macro Assembler Version 14.16.27027.1	    05/03/19 23:33:42
+Microsoft (R) Macro Assembler Version 14.16.27027.1	    05/07/19 08:57:48
 Nonni2.asm						     Page 1 - 1
 
 
@@ -71,16 +71,15 @@ c:\Irvine\SmallWin.inc(11) : warning A4011:multiple .MODEL directives found : .M
  00000031  83 C6 04			add esi, TYPE DWORD
  00000034  03 06		   	add eax, [esi]
  00000036  83 F9 00			cmp ecx, 0
- 00000039  74 02			je exitArraySum
- 0000003B  E2 F4			loop sumArrayLoop
+ 00000039  E2 F6			loop sumArrayLoop
 
- 0000003D			exitArraySum:
- 0000003D  5D				pop ebp
- 0000003E  C2 0008			ret 8
+ 0000003B			exitArraySum:
+ 0000003B  5D				pop ebp
+ 0000003C  C2 0008			ret 8
 
- 00000041			ArraySum endp
+ 0000003F			ArraySum endp
 				end main 
-Microsoft (R) Macro Assembler Version 14.16.27027.1	    05/03/19 23:33:42
+Microsoft (R) Macro Assembler Version 14.16.27027.1	    05/07/19 08:57:48
 Nonni2.asm						     Symbols 2 - 1
 
 
@@ -175,16 +174,16 @@ Segments and Groups:
 FLAT . . . . . . . . . . . . . .	GROUP
 STACK  . . . . . . . . . . . . .	32 Bit	 00001000 DWord	  Stack	  'STACK'	 
 _DATA  . . . . . . . . . . . . .	32 Bit	 0000002C DWord	  Public  'DATA'	
-_TEXT  . . . . . . . . . . . . .	32 Bit	 00000041 DWord	  Public  'CODE'	
+_TEXT  . . . . . . . . . . . . .	32 Bit	 0000003F DWord	  Public  'CODE'	
 
 
 Procedures, parameters, and locals:
 
                 N a m e                 Type     Value    Attr
 
-ArraySum . . . . . . . . . . . .	P Near	 00000026 _TEXT	Length= 0000001B Public STDCALL
+ArraySum . . . . . . . . . . . .	P Near	 00000026 _TEXT	Length= 00000019 Public STDCALL
   sumArrayLoop . . . . . . . . .	L Near	 00000031 _TEXT	
-  exitArraySum . . . . . . . . .	L Near	 0000003D _TEXT	
+  exitArraySum . . . . . . . . .	L Near	 0000003B _TEXT	
 CloseFile  . . . . . . . . . . .	P Near	 00000000 FLAT	Length= 00000000 External STDCALL
 CloseHandle  . . . . . . . . . .	P Near	 00000000 FLAT	Length= 00000000 External STDCALL
 Clrscr . . . . . . . . . . . . .	P Near	 00000000 FLAT	Length= 00000000 External STDCALL
